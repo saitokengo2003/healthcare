@@ -1,4 +1,4 @@
-package com.study.xxaxxx.healthcare.user;
+package com.study.LL.healthcare.user;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.List;

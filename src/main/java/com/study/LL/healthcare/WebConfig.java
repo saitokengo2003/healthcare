@@ -1,4 +1,4 @@
-package com.study.xxaxxx.healthcare;
+package com.study.LL.healthcare;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

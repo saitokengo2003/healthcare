@@ -1,4 +1,4 @@
-package com.study.xxaxxx.healthcare.user;
+package com.study.LL.healthcare.user;
 
 /**
  * 1件分のユーザ情報です。

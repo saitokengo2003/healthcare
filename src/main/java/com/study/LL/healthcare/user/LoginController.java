@@ -1,4 +1,4 @@
-package com.study.xxaxxx.healthcare.user;
+package com.study.LL.healthcare.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

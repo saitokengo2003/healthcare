@@ -1,4 +1,4 @@
-package com.study.xxaxxx.healthcare.user;
+package com.study.LL.healthcare.user;
 
 import java.util.ArrayList;
 import java.util.List;
