@@ -24,20 +24,36 @@
       </a>
     </header>
     <main>
-      <h1 class="page-title">
-        <span th:text="${session.userData.userName}">XXXX</span>さんのダッシュボード
-      </h1>
+  <h1 class="page-title">
+    <span th:text="${session.userData.userName}">XXXX</span>さんのダッシュボード
+  </h1>
+
+  <div class="content">
+    <!-- 左側: 一般機能 -->
+    <div class="left">
       <div class="card">
         <div class="card-content">
           <h3>一般機能</h3>
           <ul>
-            <li><a href="#" th:href="@{/task}">タスク管理 </a></li>
-            <li><a href="#" th:href="@{/avgPace}">ランニングペース計算 </a></li>
+            <li><a href="#" th:href="@{/task}">タスク管理</a></li>
+            <li><a href="#" th:href="@{/avgPace}">ランニングペース計算</a></li>
           </ul>
         </div>
       </div>
-      <!-- .card -->
-    </main>
+    </div>
+
+    <!-- 右側: Chat -->
+    <div class="right">
+      <div class="card">
+        <div class="card-content">
+          <h3>Chat</h3>
+          <p>Chat</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
     <footer>&copy; 20xx HealthCare.com</footer>
   </body>
 </html>
+
