@@ -8,7 +8,7 @@
 /** 共通のカラースキーム */
 :root {
   /* ここで定義されたカラー変数は、このCSS内で何度も再利用できる */
-  --primary-color: #4a90e2;
+  --primary-color: #0980cfe4;
   --light-primary-color: #e1f5fe;
   --secondary-color: #f5f5f5;
   --danger-color: #f44336;
@@ -229,6 +229,63 @@ main {
 .page-title {
   margin-left: 15px; /* 左側のマージン */
   font-weight: bold; /* 太字 */
+  text-align: center;
+}
+
+/* ================================ */
+/* ダッシュボードの左右半分flexレイアウト */
+/* ================================ */
+
+.content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.content > .left {
+  flex: 3;                /* 3 */
+  min-width: 200px;       /* 最小幅を設定（スマホ対応用） */
+  box-sizing: border-box;
+}
+
+.content > .right {
+  flex: 7;                /* 7 */
+  min-width: 300px;
+  box-sizing: border-box;
+  padding-right: 20px;
+}
+
+.content .card {
+  background-color: var(--white-color);
+  box-shadow: 0 4px 8px rgba(var(--black-color-rgb), 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  transition: 0.3s;
+  width: 100%;
+  height: 100%;
+}
+
+.content .card-content {
+  text-align: center;
+}
+
+/* ホバー時の影強調 */
+.content .card:hover {
+  box-shadow: 0 8px 16px rgba(var(--black-color-rgb), 0.2);
+}
+
+/* スマホ対応で縦並びに */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+}
+
+
+.chat-content p{
+  display: flex;
 }
 
 .card {
@@ -242,6 +299,7 @@ main {
 
 .card-content {
   margin-top: 16px; /* 上部の余白 */
+  text-align: center;
 }
 
 .card:hover {
@@ -277,3 +335,23 @@ footer {
   padding: 10px; /* 内側に10pxの余白を設る */
   margin: 10px; /* 外側に10pxの余白を設ける */
 }
+
+.datetime-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--white-color);
+  color: var(--dark-gray-color);
+  border: 1px solid var(--light-gray-color);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(var(--black-color-rgb), 0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 999;
+  font-family: "Roboto", sans-serif;
+}
+

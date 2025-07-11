@@ -23,21 +23,178 @@
         ><img th:src="@{/img/common/exit.svg}" src="../static/img/common/exit.svg" />ログアウト
       </a>
     </header>
+
+    
     <main>
-      <h1 class="page-title">
-        <span th:text="${session.userData.userName}">XXXX</span>さんのダッシュボード
-      </h1>
+  <h1 id="dashboard-title" class="page-title">
+    <!-- JavaScriptで置き換えるので初期表示は空でOK -->
+  </h1>
+
+
+  <div class="content">
+    <!-- 左側: 一般機能 -->
+    <div class="left">
       <div class="card">
         <div class="card-content">
           <h3>一般機能</h3>
           <ul>
-            <li><a href="#" th:href="@{/task}">タスク管理 </a></li>
-            <li><a href="#" th:href="@{/avgPace}">ランニングペース計算 </a></li>
+            <li><a href="#" th:href="@{/task}">タスク管理</a></li>
+            <li><a href="#" th:href="@{/avgPace}">ランニングペース計算</a></li>
           </ul>
         </div>
       </div>
-      <!-- .card -->
-    </main>
+    </div>
+
+    <!-- 右側: Chat -->
+    <div class="right">
+      <div class="card">
+        <div class="card-content">
+          <h3>Chat</h3>
+          <p>Chat</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <canvas id="gameCanvas" width="600" height="200" style="border:1px solid #ccc;"></canvas>
+      </div>
+    </div>
+  </div>
+</main>
     <footer>&copy; 20xx HealthCare.com</footer>
+
+    <script>
+  function updateDateTime() {
+    const now = new Date();
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+
+    const formatted = now.toLocaleString('ja-JP', options);
+    const titleElement = document.getElementById('dashboard-title');
+    titleElement.textContent = `📅 ${formatted}`;
+  }
+
+  updateDateTime(); // 初期表示
+  setInterval(updateDateTime, 1000); // 1秒ごとに更新
+</script>
+
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // 画像読み込み
+  const runnerImg = new Image();
+  runnerImg.src = "/img/common/runner.gif";// ランナー画像
+
+  const obstacleImg = new Image();
+  obstacleImg.src = "/img/common/obstacle.png";  // 障害物画像
+
+  const bgImg = new Image();
+  bgImg.src = "/img/common/background.png";  // 背景画像
+
+  // 状態変数
+  let isRunning = true;
+  let score = 0;
+  let highScore = 0;
+
+  // プレイヤー設定
+  let player = { x: 50, y: 150, width: 40, height: 40, vy: 0, jump: false };
+  const gravity = 1;
+  const ground = 150;
+
+  // 障害物
+  let obstacle = { x: 600, y: 150, width: 40, height: 40, speed: 4 };
+
+  // キー操作
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" && !player.jump && isRunning) {
+      player.vy = -15;
+      player.jump = true;
+    }
+    if (e.code === "KeyR" && !isRunning) {
+      restartGame();
+    }
+  });
+
+  function update() {
+    if (!isRunning) return;
+
+    // プレイヤー物理
+    player.y += player.vy;
+    player.vy += gravity;
+    if (player.y >= ground) {
+      player.y = ground;
+      player.jump = false;
+    }
+
+    // 障害物移動
+    obstacle.x -= obstacle.speed;
+    if (obstacle.x < -obstacle.width) {
+      obstacle.x = 600 + Math.random() * 100;
+      score += 10;
+      if (score > highScore) highScore = score;
+    }
+
+    // 衝突判定
+    if (
+      player.x < obstacle.x + obstacle.width &&
+      player.x + player.width > obstacle.x &&
+      player.y < obstacle.y + obstacle.height &&
+      player.y + player.height > obstacle.y
+    ) {
+      isRunning = false;
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(runnerImg, player.x, player.y, player.width, player.height);
+    ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+
+    // スコア表示
+    ctx.fillStyle = "#333";
+    ctx.font = "16px sans-serif";
+    ctx.fillText("Score: " + score, 10, 20);
+    ctx.fillText("High Score: " + highScore, 10, 40);
+
+    if (!isRunning) {
+      ctx.fillStyle = "rgba(0,0,0,0.6)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fff";
+      ctx.font = "24px sans-serif";
+      ctx.fillText("Game Over", 230, 100);
+      ctx.font = "16px sans-serif";
+      ctx.fillText("Press R to Restart", 220, 130);
+    }
+  }
+
+  function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+  }
+
+  function restartGame() {
+    player.y = 150;
+    player.vy = 0;
+    obstacle.x = 600;
+    score = 0;
+    isRunning = true;
+  }
+
+  bgImg.onload = () => {
+    gameLoop();
+  };
+</script>
+
   </body>
 </html>
+
