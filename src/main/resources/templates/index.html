@@ -9,106 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Roboto', sans-serif;
-        background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-        color: white;
-        min-height: 100vh;
-      }
 
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: #0d1b2a;
-      }
-
-      header a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .header-logo {
-        width: 40px;
-      }
-
-      .page-title {
-        text-align: center;
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin: 2rem 0;
-        color: #76c9f8;
-      }
-
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        padding: 0 2rem;
-      }
-
-      .card {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        color: white;
-      }
-
-      .card h3 {
-        color: #76c9f8;
-        font-weight: 700;
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-      }
-
-      .card ul {
-        list-style: none;
-        padding: 0;
-      }
-
-      .card ul li {
-        margin: 0.75rem 0;
-        font-size: 1.1rem;
-        font-weight: 500;
-      }
-
-      .card ul li a {
-        color: white;
-        text-decoration: none;
-      }
-
-      .game-area {
-        grid-column: span 2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      canvas {
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      }
-
-      footer {
-        text-align: center;
-        color: #76c9f8;
-        padding: 2rem 0;
-        font-size: 0.9rem;
-      }
-    </style>
   </head>
   <body>
     <header>
@@ -130,13 +31,24 @@
           <ul>
             <li><a href="#" th:href="@{/task}">Task Management</a></li>
             <li><a href="#" th:href="@{/avgPace}">Running Pace Calculation</a></li>
-            <li><a href="#">Chat</a></li>
+            <li><a href="#" th:href="@{/runLog}">Running Log</a></li>
           </ul>
         </div>
 
         <div class="card">
-          <h3>Chat</h3>
-          <p style="font-size: 2rem; font-weight: bold;">Chat</p>
+          <h3>Game</h3>
+          <section class="sprint-section">
+            <div class="sprint-container">
+              <h2>🏃‍♂️ 連打で100m走！</h2>
+              <canvas id="sprintCanvas" width="600" height="100"></canvas>
+              <div class="sprint-info">
+                <span id="sprintTimer">タイム: 0.00 秒</span>
+                <button id="retryButton">🔄 リトライ</button>
+              </div>
+              <p id="sprintResult"></p>
+            </div>
+          </section>
+
         </div>
       </div>
 
@@ -149,7 +61,7 @@
     </main>
 
     <footer>
-      &copy; 20xx HealthCare.com
+      &copy; 2025 HealthCare.com
     </footer>
 
     <script>
@@ -260,5 +172,69 @@
         gameLoop();
       };
     </script>
+
+    <script>
+      const sprintCanvas = document.getElementById("sprintCanvas");
+      const sprintCtx = sprintCanvas.getContext("2d");
+
+      let runnerPos = 0;
+      let lastKey = "";
+      let startTime = null;
+      let finished = false;
+      let timerInterval = null;
+
+      function drawSprintRunner() {
+        sprintCtx.clearRect(0, 0, sprintCanvas.width, sprintCanvas.height);
+        sprintCtx.fillStyle = "#2196f3";
+        sprintCtx.fillRect(runnerPos, 60, 20, 30); // ランナー
+        sprintCtx.fillStyle = "#000";
+        sprintCtx.fillRect(580, 0, 5, 100); // ゴールライン
+      }
+
+      function updateTimer() {
+        if (!startTime || finished) return;
+        const now = performance.now();
+        const time = ((now - startTime) / 1000).toFixed(2);
+        document.getElementById("sprintTimer").textContent = `タイム: ${time} 秒`;
+      }
+
+      function resetSprintGame() {
+        runnerPos = 0;
+        lastKey = "";
+        startTime = null;
+        finished = false;
+        document.getElementById("sprintResult").textContent = "←→キー交互で連打してゴールを目指せ！（100m走）";
+        document.getElementById("sprintTimer").textContent = `タイム: 0.00 秒`;
+        drawSprintRunner();
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 50);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (finished) return;
+        if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+          if (lastKey !== e.code) {
+            if (!startTime) {
+              startTime = performance.now();
+              timerInterval = setInterval(updateTimer, 50);
+            }
+            runnerPos += 5;
+            lastKey = e.code;
+            drawSprintRunner();
+            if (runnerPos >= 580) {
+              finished = true;
+              const time = ((performance.now() - startTime) / 1000).toFixed(2);
+              document.getElementById("sprintResult").textContent = `🎉 ゴール！タイム: ${time} 秒`;
+              clearInterval(timerInterval);
+            }
+          }
+        }
+      });
+
+      document.getElementById("retryButton").addEventListener("click", resetSprintGame);
+
+      resetSprintGame();
+    </script>
+
   </body>
 </html>
