@@ -1,7 +1,8 @@
-/* 開発用にデータ削除を追加 : リリース時は消す
+-- 開発用にデータ削除を追加 : リリース時は消す
 DROP TABLE task_t;
 DROP TABLE user_m;
- */
+DROP TABLE run_log;
+
 /* ユーザマスタ */
 CREATE TABLE IF NOT EXISTS
   user_m (
@@ -20,4 +21,15 @@ CREATE TABLE IF NOT EXISTS
     title VARCHAR(50),
     limitday DATE,
     complete BOOLEAN
+  );
+
+CREATE TABLE IF NOT EXISTS
+  run_log (
+    id INT PRIMARY KEY,
+    user_id VARCHAR(50),
+    title VARCHAR(50),
+    limitday DATE,
+    complete BOOLEAN,
+    distance REAL,
+    timelog REAL
   );
