@@ -221,6 +221,12 @@ header a img {
   height: auto; /* 高さを自動調整 */
 }
 
+header .logout-icon {
+  width: 24px;
+  height: 24px;
+}
+
+
 /* メインコンテンツ */
 main {
   padding-top: 30px; /* 上部のパディング */
@@ -280,6 +286,10 @@ main {
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
+  }
+  #gameCanvas {
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -355,3 +365,27 @@ footer {
   font-family: "Roboto", sans-serif;
 }
 
+.game-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  background: linear-gradient(to bottom, #0e2a47, #112b3c);
+}
+
+.game-container {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+#gameCanvas {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+}
