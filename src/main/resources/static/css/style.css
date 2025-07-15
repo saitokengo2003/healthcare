@@ -158,10 +158,10 @@ table tr:nth-child(even) {
   background-color: var(--pale-gray-color); /* 背景色を薄い灰色に */
 }
 
-table tr:hover {
+/* table tr:hover { */
   /* テーブル行にマウスオーバーした時のスタイル */
-  background-color: var(--light-primary-color); /* ホバー時の背景色を薄い青に */
-}
+  /* background-color: var(--light-primary-color); ホバー時の背景色を薄い青に */
+/* } */
 
 ul {
   list-style: none; /* リストマーカーを非表示に */
@@ -180,8 +180,8 @@ ul li a {
 
 ul li:hover {
   /* リストアイテムにマウスオーバーした時のスタイル */
-  background-color: var(--pale-gray-color); /* ホバー時の背景色を薄い灰色に */
-}
+  background-color: var(--pale-gray-color); 
+} 
 
 /* ヘッダー */
 header {

@@ -1,7 +1,7 @@
 /* 開発用にデータ削除を追加 : リリース時は消す */
-DELETE FROM user_m;
-
-DELETE FROM task_t;
+-- DELETE FROM user_m;
+-- DELETE FROM task_t;
+-- DELETE FROM run_log;
 
 /* ユーザマスタのデータ（ADMIN権限） */
 INSERT INTO
