@@ -77,3 +77,29 @@ VALUES
     '2024-02-27',
     FALSE
   );
+
+INSERT INTO
+  run_log (id, user_id, title, limitday, complete, distance, timelog)
+VALUES
+  (
+    5,
+    'goro@xxx.co.jp',
+    'goro',
+    '2023-06-24',
+    FALSE,
+    3.4,
+    12.4
+  );
+
+  INSERT INTO
+  run_log (id, user_id, title, limitday, complete, distance, timelog)
+VALUES
+  (
+    6,
+    'taro@xxx.co.jp',
+    'taro',
+    '2023-06-24',
+    FALSE,
+    3.4,
+    12.4
+  );
