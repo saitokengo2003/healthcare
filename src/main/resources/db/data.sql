@@ -1,7 +1,7 @@
 /* 開発用にデータ削除を追加 : リリース時は消す */
-DELETE FROM user_m;
-
-DELETE FROM task_t;
+-- DELETE FROM user_m;
+-- DELETE FROM task_t;
+-- DELETE FROM run_log;
 
 /* ユーザマスタのデータ（ADMIN権限） */
 INSERT INTO
@@ -76,4 +76,30 @@ VALUES
     '近所のスポーツクラブに登録するため、必要な書類と登録費用を準備する',
     '2024-02-27',
     FALSE
+  );
+
+INSERT INTO
+  run_log (id, user_id, title, limitday, complete, distance, timelog)
+VALUES
+  (
+    5,
+    'goro@xxx.co.jp',
+    '札幌駅から千歳駅まで',
+    '2023-06-24',
+    FALSE,
+    3.4,
+    12.4
+  );
+
+  INSERT INTO
+  run_log (id, user_id, title, limitday, complete, distance, timelog)
+VALUES
+  (
+    6,
+    'taro@xxx.co.jp',
+    '菊水駅から新さっぽろ駅まで',
+    '2023-06-24',
+    FALSE,
+    7.2,
+    36.7
   );

@@ -1,14 +1,10 @@
 @charset "UTF-8";
 /* 文字エンコーディングをUTF-8に設定して、多言語対応を可能にする */
 
-/*
- WebPortalのCSS設定.
- */
-
 /** 共通のカラースキーム */
 :root {
   /* ここで定義されたカラー変数は、このCSS内で何度も再利用できる */
-  --primary-color: #4a90e2;
+  --primary-color: #0980cfe4;
   --light-primary-color: #e1f5fe;
   --secondary-color: #f5f5f5;
   --danger-color: #f44336;
@@ -76,7 +72,9 @@ input[type="password"] {
   border: 1px solid var(--light-gray-color); /* 薄い灰色の境界線を設定 */
   border-radius: 5px; /* 角を丸くするための設定 */
   margin-bottom: 10px; /* 要素の下に10pxのマージンを設定 */
-  width: 100%; /* 親要素の幅に合わせて拡張 */
+  width: 30%;
+  display: block;
+  margin: 0 auto;
   box-sizing: border-box; /* パディングと境界線を幅と高さに含める */
 }
 
@@ -98,7 +96,9 @@ input[type="password"]::placeholder {
 
 select,
 input[type="date"] {
-  width: 100%; /* 親要素の幅に合わせて拡張 */
+  width: 30%;
+  display: block;
+  margin: 0 auto;
   padding: 10px 15px; /* 内側の余白を設定 */
   font-size: 16px; /* フォントサイズを16pxに設定 */
   border: 1px solid var(--light-gray-color); /* 薄い灰色の境界線を設定 */
@@ -162,10 +162,10 @@ table tr:nth-child(even) {
   background-color: var(--pale-gray-color); /* 背景色を薄い灰色に */
 }
 
-table tr:hover {
+/* table tr:hover { */
   /* テーブル行にマウスオーバーした時のスタイル */
-  background-color: var(--light-primary-color); /* ホバー時の背景色を薄い青に */
-}
+  /* background-color: var(--light-primary-color); ホバー時の背景色を薄い青に */
+/* } */
 
 ul {
   list-style: none; /* リストマーカーを非表示に */
@@ -184,8 +184,8 @@ ul li a {
 
 ul li:hover {
   /* リストアイテムにマウスオーバーした時のスタイル */
-  background-color: var(--pale-gray-color); /* ホバー時の背景色を薄い灰色に */
-}
+  background-color: var(--pale-gray-color); 
+} 
 
 /* ヘッダー */
 header {
@@ -221,6 +221,12 @@ header a img {
   height: auto; /* 高さを自動調整 */
 }
 
+header .logout-icon {
+  width: 24px;
+  height: 24px;
+}
+
+
 /* メインコンテンツ */
 main {
   padding-top: 30px; /* 上部のパディング */
@@ -229,6 +235,67 @@ main {
 .page-title {
   margin-left: 15px; /* 左側のマージン */
   font-weight: bold; /* 太字 */
+  text-align: center;
+}
+
+/* ================================ */
+/* ダッシュボードの左右半分flexレイアウト */
+/* ================================ */
+
+.content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.content > .left {
+  flex: 3;                /* 3 */
+  min-width: 200px;       /* 最小幅を設定（スマホ対応用） */
+  box-sizing: border-box;
+}
+
+.content > .right {
+  flex: 7;                /* 7 */
+  min-width: 300px;
+  box-sizing: border-box;
+  padding-right: 20px;
+}
+
+.content .card {
+  background-color: var(--white-color);
+  box-shadow: 0 4px 8px rgba(var(--black-color-rgb), 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  transition: 0.3s;
+  width: 100%;
+  height: 100%;
+}
+
+.content .card-content {
+  text-align: center;
+}
+
+/* ホバー時の影強調 */
+.content .card:hover {
+  box-shadow: 0 8px 16px rgba(var(--black-color-rgb), 0.2);
+}
+
+/* スマホ対応で縦並びに */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  #gameCanvas {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+.chat-content p{
+  display: flex;
 }
 
 .card {
@@ -242,6 +309,7 @@ main {
 
 .card-content {
   margin-top: 16px; /* 上部の余白 */
+  text-align: center;
 }
 
 .card:hover {
@@ -277,3 +345,255 @@ footer {
   padding: 10px; /* 内側に10pxの余白を設る */
   margin: 10px; /* 外側に10pxの余白を設ける */
 }
+
+.datetime-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--white-color);
+  color: var(--dark-gray-color);
+  border: 1px solid var(--light-gray-color);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(var(--black-color-rgb), 0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 999;
+  font-family: "Roboto", sans-serif;
+}
+
+.game-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  background: linear-gradient(to bottom, #0e2a47, #112b3c);
+}
+
+.game-container {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+#gameCanvas {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+}
+
+      body {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+        color: white;
+        min-height: 100vh;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: #0d1b2a;
+      }
+
+      header a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-logo {
+        width: 40px;
+      }
+
+      .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 2rem 0;
+        color: #76c9f8;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 0 2rem;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: white;
+      }
+
+      .card h3 {
+        color: #76c9f8;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      .card ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .card ul li {
+        margin: 0.75rem 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .card ul li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .game-area {
+        grid-column: span 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      canvas {
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      footer {
+        text-align: center;
+        color: #76c9f8;
+        padding: 2rem 0;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+.sprint-section {
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #f3fafe;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.sprint-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #1976d2;
+}
+
+.sprint-container canvas {
+  border: 3px solid #1976d2;
+  background: linear-gradient(to right, #fff, #e3f2fd);
+  margin-bottom: 10px;
+}
+
+.sprint-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+#sprintTimer {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+#retryButton {
+  padding: 6px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+#retryButton:hover {
+  background-color: #388e3c;
+}
+
+#sprintResult {
+  font-size: 18px;
+  color: #444;
+}
+
+#game-area {
+      width: 100%;
+      height: 110px;
+      background: #ff5252;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      margin-bottom: 30px;
+      font-size: 1.35rem;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 18px 0 #141e3029;
+      transition: background 0.35s, box-shadow 0.25s;
+      user-select: none;
+      letter-spacing: 1.2px;
+    }
+    #result {
+      margin-top: 18px;
+      color: #fff;
+      font-size: 1.15rem;
+      text-align: center;
+      min-height: 24px;
+      font-weight: 400;
+      text-shadow: 0 1px 8px #1976d23d;
+    }
+    #start-btn {
+      padding: 12px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1976d2 20%, #43a047 100%);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      box-shadow: 0 3px 15px 0 #1976d259;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.1s, background 0.3s;
+    }
+    #start-btn:active {
+      transform: scale(0.98);
+    }
+    #start-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #bbb;
+      box-shadow: none;
+    }
