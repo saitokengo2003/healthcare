@@ -547,4 +547,53 @@ footer {
   color: #444;
 }
 
-
+#game-area {
+      width: 100%;
+      height: 110px;
+      background: #ff5252;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      margin-bottom: 30px;
+      font-size: 1.35rem;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 18px 0 #141e3029;
+      transition: background 0.35s, box-shadow 0.25s;
+      user-select: none;
+      letter-spacing: 1.2px;
+    }
+    #result {
+      margin-top: 18px;
+      color: #fff;
+      font-size: 1.15rem;
+      text-align: center;
+      min-height: 24px;
+      font-weight: 400;
+      text-shadow: 0 1px 8px #1976d23d;
+    }
+    #start-btn {
+      padding: 12px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1976d2 20%, #43a047 100%);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      box-shadow: 0 3px 15px 0 #1976d259;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.1s, background 0.3s;
+    }
+    #start-btn:active {
+      transform: scale(0.98);
+    }
+    #start-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #bbb;
+      box-shadow: none;
+    }

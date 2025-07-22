@@ -58,6 +58,12 @@
     <canvas id="gameCanvas" width="600" height="200"></canvas>
   </div>
 </section>
+    <div class="card">
+      <h1>反射神経テスト</h1>
+      <div id="game-area">スタートボタンを押してね</div>
+      <button id="start-btn">スタート</button>
+      <div id="result"></div>
+    </div>
     </main>
 
     <footer>
@@ -236,5 +242,47 @@
       resetSprintGame();
     </script>
 
+    <script>
+      const gameArea = document.getElementById("game-area");
+      const startBtn = document.getElementById("start-btn");
+      const result = document.getElementById("result");
+      let canClick = false;
+      let startTime2 = 0;
+      let timeoutId = null;
+
+    startBtn.onclick = function() {
+      result.textContent = "";
+      gameArea.textContent = "赤のまま待っててね";
+      gameArea.style.background = "#ff5252";
+      canClick = false;
+      startBtn.disabled = true;
+
+      // ランダムな待ち時間（1〜3秒）
+      const waitTime = Math.random() * 2000 + 1000;
+      timeoutId = setTimeout(() => {
+        gameArea.textContent = "今すぐクリック！";
+        gameArea.style.background = "#43a047";
+        canClick = true;
+        startTime2 = performance.now();
+      }, waitTime);
+    };
+    gameArea.onclick = function() {
+      if (!startBtn.disabled) return; // ゲーム中以外は何もしない
+      if (canClick) {
+        const reaction = performance.now() - startTime2;
+        gameArea.textContent = "結果：" + reaction.toFixed(0) + " ミリ秒";
+        result.textContent = "もう一度挑戦しよう！";
+        gameArea.style.background = "#1976d2";
+        canClick = false;
+        startBtn.disabled = false;
+      } else {
+        clearTimeout(timeoutId);
+        gameArea.textContent = "フライング！もう一度スタート";
+        result.textContent = "";
+        gameArea.style.background = "#ffb300";
+        startBtn.disabled = false;
+      }
+    };
+  </script>
   </body>
 </html>
