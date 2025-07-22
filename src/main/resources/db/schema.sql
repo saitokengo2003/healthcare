@@ -1,7 +1,7 @@
 -- 開発用にデータ削除を追加 : リリース時は消す
-DROP TABLE task_t;
-DROP TABLE user_m;
-DROP TABLE run_log;
+DROP TABLE IF EXISTS task_t;
+DROP TABLE IF EXISTS user_m;
+DROP TABLE IF EXISTS run_log;
 
 /* ユーザマスタ */
 CREATE TABLE IF NOT EXISTS

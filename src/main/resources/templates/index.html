@@ -54,10 +54,19 @@
 
       <!-- ゲームセクション -->
 <section class="game-section">
-  <div class="game-container">
+  <div class="game-area">
     <canvas id="gameCanvas" width="600" height="200"></canvas>
   </div>
 </section>
+
+      <!-- <div class="card">
+        <h3>Game</h3>
+        <section class="game-section">
+          <div class="game-area">
+            <canvas id="gameCanvas" width="600" height="200"></canvas>
+          </div>
+        </section>
+      </div> -->
     </main>
 
     <footer>
@@ -85,6 +94,10 @@
     <script>
       const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
+      canvas.width = 800;
+      canvas.height = 200;
+      canvas.style.width = "100%";
+      canvas.style.height = "auto";
       const runnerImg = new Image();
       runnerImg.src = "/img/common/runner.gif";
       const obstacleImg = new Image();
@@ -141,16 +154,19 @@
         ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         ctx.fillStyle = "#ffffff";
         ctx.font = "16px Roboto";
+        ctx.textAlign = "left"; // スコア用は左揃え
         ctx.fillText("Score: " + score, 10, 20);
         ctx.fillText("High Score: " + highScore, 10, 40);
         if (!isRunning) {
           ctx.fillStyle = "rgba(0,0,0,0.6)";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.fillStyle = "#fff";
+          ctx.textAlign = "center";        // 中央揃えに変更
+          ctx.textBaseline = "middle";     // 垂直中央揃え
           ctx.font = "24px Roboto";
-          ctx.fillText("Game Over", 230, 100);
+          ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 10);
           ctx.font = "16px Roboto";
-          ctx.fillText("Press R to Restart", 220, 130);
+          ctx.fillText("Press R to Restart", canvas.width / 2, canvas.height / 2 + 20);
         }
       }
 
